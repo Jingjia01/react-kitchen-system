@@ -8,7 +8,7 @@ export default function Header() {
   const navigate = useNavigate();
 
   return (
-    <header className="bg-white shadow-sm w-full">
+    <header className="bg-white shadow-sm w-full fixed">
       <div className="w-full mx-auto px-4 sm:px-6 lg:px-8">
         <div className="h-16 flex items-center justify-between">
           <div className="shrink-0">

@@ -3,3 +3,4 @@ flask-socketio
 eventlet
 requests
 websocket-client
+flask-cors

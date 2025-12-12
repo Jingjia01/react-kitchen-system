@@ -6,8 +6,11 @@ from flask_socketio import SocketIO, emit
 import time
 import random
 import copy
+from flask_cors import CORS
 
 app = Flask(__name__)
+CORS(app)
+
 socketio = SocketIO(app, cors_allowed_origins="*", async_mode='eventlet')
 
 orders = []
@@ -51,7 +54,7 @@ def order_generator():
     while True:
         socketio.sleep(random.randint(5, 15))
 
-        chosen_items = [copy.deepcopy(item) for item in random.choices(base_menu_items, k=random.randint(1, 6))]
+        chosen_items = [copy.deepcopy(item) for item in random.choices(base_menu_items, k=random.randint(3, 9))]
 
         new_order = {
             "orderId": next_order_id,
