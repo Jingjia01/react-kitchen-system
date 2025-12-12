@@ -2,7 +2,7 @@
 import KitchenCardGrid from "../components/KitchenCardGrid";
 import './page.css'
 
-export default function OpenPage() {
+export default function CompletePage() {
   const orders = [
     {
       orderId: 101,

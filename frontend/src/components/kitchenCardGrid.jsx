@@ -35,7 +35,6 @@ export default function KitchenCardGrid({ orders }) {
     }
   }
 
-  // push any remaining cars
   if (currentColumn.length > 0) columns.push(currentColumn);
 
   return (
@@ -52,20 +51,30 @@ export default function KitchenCardGrid({ orders }) {
 };
 
 function CardWithTimer({ items, type, orderId, time, table, continued, isLastSection }) {
-  const [startTime, setStartTime] = useState(null);
-  const [elapsed, setElapsed] = useState(0);
-  const [isDone, setIsDone] = useState(false);
-
-  const handleStart = () => { if (!startTime) setStartTime(Date.now()); };
-  const handleDone = () => { setIsDone(true); };
+  const [isRunning, setIsRunning] = useState(false);
+  const [elapsedTime, setElapsedTime] = useState(0);
 
   useEffect(() => {
-    if (!startTime || isDone) return;
+    if (!isRunning) return;
+
     const interval = setInterval(() => {
-      setElapsed(Math.floor((Date.now() - startTime) / 1000));
+      setElapsedTime(prev => prev + 1);
     }, 1000);
+
     return () => clearInterval(interval);
-  }, [startTime, isDone]);
+  }, [isRunning]);
+
+  const handleStart = () => {
+    if (!isRunning) setIsRunning(true);
+  };
+
+  const handleDone = () => {
+    setIsRunning(false);
+  };
+
+  const handleRevert = () => {
+    setIsRunning(true);
+  };
 
   const formatTime = (seconds) => {
     const m = Math.floor(seconds / 60).toString().padStart(2, "0");
@@ -82,11 +91,11 @@ function CardWithTimer({ items, type, orderId, time, table, continued, isLastSec
         table={table}
         items={items}
         continued={continued}
-        timer={startTime && !isDone ? formatTime(elapsed) : null}
-        isDone={isDone}
+        timer={elapsedTime > 0 ? formatTime(elapsedTime) : null}
         onStart={handleStart}
         onDone={handleDone}
-        showButton={isLastSection}
+        onRevert={handleRevert}
+        showButton={isLastSection} 
       />
     </div>
   );
