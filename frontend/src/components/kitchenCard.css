@@ -4,7 +4,10 @@
     border-radius: 12px;
     border: 1px solid #e2e2e2;
     box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-    width: 400px;
+    width: 390px;
+    margin-top: 10px;
+    margin-left: 10px;
+    height: auto;
 }
 
 .kcard-header {

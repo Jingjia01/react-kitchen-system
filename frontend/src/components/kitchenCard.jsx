@@ -41,6 +41,7 @@ export default function KitchenCard({
     isDone,
     onStart,
     onDone,
+    showButton
 }) {
     return (
         <div className="kcard">
@@ -80,19 +81,19 @@ export default function KitchenCard({
             {continued && <div className="kcard-continued">Continued...</div>}
 
             <div className="button-row">
-                {getButtonProps(type, timer, onStart, onDone, () => onStart && onStart()) && (
-                    <button
-                    className="kcard-btn"
-                    onClick={getButtonProps(type, timer, onStart, onDone, () => onStart && onStart()).onClick}
-                    style={{
-                        color: statusColors[type] || "#000",
-                        border: `2px solid ${statusColors[type] || "#000"}`,
-                        backgroundColor: "transparent",
-                    }}
-                    >
-                    {getButtonProps(type, timer, onStart, onDone, () => onStart && onStart()).label}
-                    </button>
-                )}
+              {showButton && getButtonProps(type, timer, onStart, onDone, () => onStart && onStart()) && (
+                <button
+                  className="kcard-btn"
+                  onClick={getButtonProps(type, timer, onStart, onDone, () => onStart && onStart()).onClick}
+                  style={{
+                    color: statusColors[type] || "#000",
+                    border: `2px solid ${statusColors[type] || "#000"}`,
+                    backgroundColor: "transparent",
+                  }}
+                >
+                  {getButtonProps(type, timer, onStart, onDone, () => onStart && onStart()).label}
+                </button>
+              )}
             </div>
         </div>
     );
