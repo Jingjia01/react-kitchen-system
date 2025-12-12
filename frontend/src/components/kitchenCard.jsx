@@ -2,6 +2,34 @@ import React from "react";
 import "./KitchenCard.css";
 import { Printer } from "lucide-react";
 
+const statusColors = {
+  Pending: "#616160",    
+  Preparing: "#e25e18",  
+  Ready: "#00815b",      
+};
+
+const getButtonProps = (type, timer, onStart, onDone, onReset) => {
+  switch (type) {
+    case "Pending":
+      return {
+        label: "Start",
+        onClick: onStart,
+      };
+    case "Preparing":
+      return {
+        label: "Complete",
+        onClick: onDone,
+      };
+    case "Ready":
+      return {
+        label: "Revert",
+        onClick: onReset, 
+      };
+    default:
+      return null;
+  }
+};
+
 export default function KitchenCard({
     orderId,
     time, 
@@ -16,14 +44,14 @@ export default function KitchenCard({
 }) {
     return (
         <div className="kcard">
-            <div className={`kcard-header ${type}`}>
+            <div className="kcard-header" style={{ backgroundColor: statusColors[type] || "transparent" }}>
                 <div className="kcard-header-left">
                     <span>Order #{orderId}</span>
-                    <span>{time}</span>
+                    <p>{time}</p>
                 </div>
 
                 <button className="kcard-printer-btn" onClick={() => console.log("print")}>
-                    <Printer size={20} />
+                    <Printer size={28} color="white" strokeWidth={1}/>
                 </button>
             </div>
 
@@ -51,16 +79,21 @@ export default function KitchenCard({
 
             {continued && <div className="kcard-continued">Continued...</div>}
 
-            {!isDone ? (
-                <button
-                    className={`kcard-btn ${timer ? "btn-done" : ""}`}
-                    onClick={timer ? onDone : onStart}
-                >
-                    {timer ? "Mark Done" : "Start"}
-                </button>
-            ) : (
-                <div className="kcard-finished">Completed</div>
-            )}
+            <div className="button-row">
+                {getButtonProps(type, timer, onStart, onDone, () => onStart && onStart()) && (
+                    <button
+                    className="kcard-btn"
+                    onClick={getButtonProps(type, timer, onStart, onDone, () => onStart && onStart()).onClick}
+                    style={{
+                        color: statusColors[type] || "#000",
+                        border: `2px solid ${statusColors[type] || "#000"}`,
+                        backgroundColor: "transparent",
+                    }}
+                    >
+                    {getButtonProps(type, timer, onStart, onDone, () => onStart && onStart()).label}
+                    </button>
+                )}
+            </div>
         </div>
     );
 }

@@ -2,7 +2,6 @@
 import KitchenCard from "../components/kitchenCard"
 
 export default function OpenPage() {
-  // Example fake orders
   const orders = [
     {
       orderId: 101,
@@ -44,9 +43,6 @@ export default function OpenPage() {
 
   return (
     <main className="p-4">
-      <h1 className="text-2xl font-semibold text-green-400">Open Orders</h1>
-      <p>Here you can see all open orders.</p>
-
       <div className="open-orders-grid mt-4">
         {orders.map((order) => (
           <KitchenCard key={order.orderId} {...order} />
