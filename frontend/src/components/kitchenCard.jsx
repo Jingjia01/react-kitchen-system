@@ -43,7 +43,22 @@ export default function KitchenCard({
           <p>{time}</p>
         </div>
 
-        <button className="kcard-printer-btn" onClick={() => console.log("print")}>
+        <button 
+          className="kcard-printer-btn"
+          onClick={() => {
+            if (window.electronAPI) {
+              window.electronAPI.printOrder({
+                orderId,
+                time,
+                table,
+                items
+              });
+            } else {
+              console.warn("Electron API not available");
+            }
+          }}
+        
+        >
           <Printer size={28} color="white" strokeWidth={1}/>
         </button>
       </div>
